@@ -1,0 +1,14 @@
+{
+  "serials": [
+    {"prefix": "XAW1", "min": 0, "max": 6999, "status": "unpatched", "exploit": "fusee-gelee"},
+    {"prefix": "XAW1", "min": 7000, "max": 9149, "status": "potentially_patched", "exploit": "test_with_payload"},
+    {"prefix": "XAW1", "min": 9150, "max": 999999, "status": "patched", "exploit": "modchip"},
+    {"prefix": "XAW4", "status": "patched", "exploit": "modchip"},
+    {"prefix": "XAW7", "status": "v2_mariko", "exploit": "modchip"},
+    {"prefix": "XAW9", "status": "v2_mariko", "exploit": "modchip"},
+    {"prefix": "XKW1", "status": "lite", "exploit": "modchip_professional"},
+    {"prefix": "XKW2", "status": "lite", "exploit": "modchip_professional"},
+    {"prefix": "XTE1", "status": "oled", "exploit": "modchip_professional"}
+  ],
+  "notes": "This database is for reference only. Always verify with ismyswitchpatched.com and official sources."
+}

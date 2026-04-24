@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Switch Homebrew Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="preflight-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h1>⚠️ IMPORTANT - READ CAREFULLY</h1>
+            <div class="warning-box">
+                <p>You must read and understand the official guide at <strong>switch.hacks.guide</strong> before using this tool.</p>
+                <p>This application is a <strong>convenience wrapper</strong>, not a replacement for understanding the process.</p>
+                <p class="danger">Bricking risks exist. Proceed at your own risk.</p>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="guide-read-checkbox">
+                <label for="guide-read-checkbox">I have read the getting-started section of switch.hacks.guide and understand the risks</label>
+            </div>
+            <button id="acknowledge-btn" class="primary-btn" disabled>Enter Assistant</button>
+        </div>
+    </div>
+
+    <div class="app-container" style="display: none;">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>Switch HB Assistant</h2>
+            </div>
+            <ul class="nav-menu">
+                <li data-view="guide" class="nav-item active">
+                    <span class="icon">📖</span>
+                    <span>Official Guide</span>
+                </li>
+                <li data-view="compatibility" class="nav-item">
+                    <span class="icon">🔧</span>
+                    <span>Compatibility Check</span>
+                </li>
+                <li data-view="downloads" class="nav-item">
+                    <span class="icon">⬇️</span>
+                    <span>Downloads</span>
+                </li>
+                <li data-view="sd-card" class="nav-item">
+                    <span class="icon">💾</span>
+                    <span>SD Card Helper</span>
+                </li>
+                <li data-view="logs" class="nav-item">
+                    <span class="icon">📋</span>
+                    <span>Logs</span>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <a href="https://switch.hacks.guide/" target="_blank" class="guide-link">🔗 switch.hacks.guide</a>
+            </div>
+        </nav>
+        
+        <main class="content-area">
+            <div id="guide-view" class="view active">
+                <iframe src="https://switch.hacks.guide/" title="Official Switch Hacks Guide"></iframe>
+            </div>
+            
+            <div id="compatibility-view" class="view">
+                <h2>Console Compatibility Check</h2>
+                <div class="compatibility-form">
+                    <label for="serial-input">Switch Serial Number (first 10 characters):</label>
+                    <input type="text" id="serial-input" placeholder="e.g., XAW10000000000" maxlength="10">
+                    <button id="check-serial-btn" class="primary-btn">Check Compatibility</button>
+                </div>
+                <div id="compatibility-result" class="result-card" style="display: none;">
+                    <h3>Results:</h3>
+                    <div id="result-content"></div>
+                </div>
+            </div>
+            
+            <div id="downloads-view" class="view">
+                <h2>Download Center</h2>
+                <div class="download-tabs">
+                    <button class="tab-btn active" data-mode="bulk">Bulk Download</button>
+                    <button class="tab-btn" data-mode="manual">Manual Download</button>
+                </div>
+                
+                <!-- Bulk Download Mode -->
+                <div id="bulk-mode" class="download-mode active">
+                    <p class="info-text">Select components to download. All files will be downloaded to your chosen directory.</p>
+                    <div class="checklist" id="bulk-checklist"></div>
+                    <div class="download-actions">
+                        <button id="select-dir-btn" class="secondary-btn">Select Download Directory</button>
+                        <button id="download-selected-btn" class="primary-btn" disabled>Download Selected</button>
+                    </div>
+                    <div id="download-dir-display" class="info-display"></div>
+                    <div id="download-progress" class="progress-container" style="display: none;">
+                        <h4>Download Progress:</h4>
+                        <div id="progress-list"></div>
+                    </div>
+                    <div id="download-summary" class="summary-card" style="display: none;"></div>
+                </div>
+                
+                <!-- Manual Download Mode -->
+                <div id="manual-mode" class="download-mode" style="display: none;">
+                    <p class="info-text">Click on any component to expand and see manual download information.</p>
+                    <div id="manual-list" class="manual-list"></div>
+                </div>
+            </div>
+            
+            <div id="sd-card-view" class="view">
+                <h2>SD Card Preparation Helper</h2>
+                <div>
+                    <button id="scan-drives-btn" class="secondary-btn">Scan for SD Cards</button>
+                    <div id="drive-list" class="drive-list"></div>
+                </div>
+                <div class="format-warning">
+                    <h4>⚠️ Format Warning</h4>
+                    <p>FAT32 is recommended for Switch SD cards. exFAT can cause corruption. Use <strong>gui-format</strong> or similar tools for FAT32 formatting on large cards.</p>
+                </div>
+                <div class="drag-zone" id="drag-zone">
+                    <p>📂 Drag and drop files here to copy to SD card</p>
+                    <p class="small">Files will be validated and placed in correct SD card directories</p>
+                </div>
+                <div id="copy-results"></div>
+                <div class="filesystem-tree">
+                    <h4>SD Card Filesystem Structure:</h4>
+                    <pre>
+SD Card/
+├── bootloader/
+│   ├── hekate_ctcaer_x.x.x.bin
+│   └── payloads/
+├── atmosphere/
+│   ├── contents/
+│   ├── exefs_patches/
+│   └── config/
+├── switch/
+│   └── .overlays/
+└── emummc/
+                    </pre>
+                </div>
+            </div>
+            
+            <div id="logs-view" class="view">
+                <h2>System Logs</h2>
+                <div class="log-controls">
+                    <button id="export-logs-btn" class="secondary-btn">Export Logs</button>
+                    <button id="clear-logs-btn" class="secondary-btn">Clear Display</button>
+                </div>
+                <div id="log-console" class="log-console"></div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="renderer.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+{
+  "name": "switch-homebrew-assistant",
+  "version": "1.0.0",
+  "description": "Educational companion to switch.hacks.guide for Nintendo Switch homebrew installation",
+  "main": "main.js",
+  "author": "Homebrew Assistant Team",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "dependencies": {
+    "axios": "^1.6.2",
+    "drivelist": "^12.0.0",
+    "fs-extra": "^11.2.0",
+    "usb": "^2.10.0"
+  },
+  "devDependencies": {
+    "electron": "^41.3.0",
+    "electron-builder": "^26.8.1"
+  },
+  "build": {
+    "appId": "com.switch.homebrew.assistant",
+    "productName": "Switch Homebrew Assistant",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/**/*",
+      "assets/**/*"
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
+  }
+}
